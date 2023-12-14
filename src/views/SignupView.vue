@@ -8,6 +8,9 @@
             <label for="password">Password</label>
             <input type="password" v-model="password" v-bind="passwordAttrs">
             <div class="error-msg" v-if="isFieldTouched('password')">{{ errors.password }}</div>
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" v-model="confirmPassword" v-bind="confirmPasswordAttrs">
+            <div class="error-msg" v-if="isFieldTouched('confirmPassword')">{{ errors.confirmPassword }}</div>
             <button type="submit" class="btn btn-primary" :disabled="isSubmitting">Sign Up</button>
         </form>
         <p class="login-text">Already have an account? <RouterLink to="/login" class="login-link">Login</RouterLink>
@@ -22,7 +25,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import * as Yup from 'yup';
 import { useForm } from 'vee-validate';
-import { userStore } from '@/userStore';
+import { useToast } from 'vue-toastification';
 
 type Response = {
     message: string
@@ -33,6 +36,7 @@ type Response = {
 const router = useRouter();
 const resError = ref<string | undefined>();
 
+const toast = useToast();
 const handleSignup = async (values: any) => {
     const API_URL = import.meta.env.VITE_API_URL;
     const res = await fetch(`${API_URL}api/v1/users/`, {
@@ -47,7 +51,7 @@ const handleSignup = async (values: any) => {
 
     const data: Response = await res.json();
     if (res.status === 201) {
-        alert('User Registered Successfuly')
+        toast.success('User created successfully');
         router.push('/login');
     } else {
         resError.value = data?.error;
@@ -57,6 +61,7 @@ const handleSignup = async (values: any) => {
 const schema = Yup.object().shape({
     username: Yup.string().required('Username is required').min(6, 'Username must be at least 3 characters'),
     password: Yup.string().required('Password is required').min(6, 'Password must be at least 6 characters'),
+    confirmPassword: Yup.string().required('Confirm Password is required').oneOf([Yup.ref('password')], 'Passwords must match'),
 });
 
 const { errors, handleSubmit, defineField, isSubmitting, isFieldTouched } = useForm({
@@ -69,6 +74,7 @@ const onSubmit = handleSubmit(values => {
 
 const [username, usernameAttrs] = defineField('username');
 const [password, passwordAttrs] = defineField('password');
+const [confirmPassword, confirmPasswordAttrs] = defineField('confirmPassword');
 
 </script>
 
@@ -130,6 +136,8 @@ button {
 
 .error-msg {
     color: red;
+    font-size: .85rem;
+    font-weight: 300;
 }
 
 .login-text {

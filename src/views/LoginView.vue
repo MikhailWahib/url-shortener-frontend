@@ -10,7 +10,6 @@
             <div class="error-msg" v-if="isFieldTouched('password')">{{ errors.password }}</div>
             <button type="submit" class="btn btn-primary" :disabled="isSubmitting">Login</button>
         </form>
-        <button class="btn btn-secondary guest-btn" @click="loginAsGuest" :disabled="isSubmitting">Login as Guest</button>
         <p class="signup-text">New User? <RouterLink to="/signup" class="signup-link">Sign Up</RouterLink>
         </p>
         <div class="error-msg" v-if="resError">{{ resError }}</div>
@@ -76,11 +75,6 @@ const onSubmit = handleSubmit(values => {
 const [username, usernameAttrs] = defineField('username');
 const [password, passwordAttrs] = defineField('password');
 
-
-const loginAsGuest = async () => {
-    await handleLogin({ username: 'guest123', password: 'guest123' });
-}
-
 </script>
 
 
@@ -107,7 +101,6 @@ form {
     flex-direction: column;
     align-items: center;
     gap: .5rem;
-    /* border: 1px solid red; */
 }
 
 label {

@@ -35,8 +35,6 @@ const props = defineProps({
     }
 })
 
-watchEffect(() => console.log(props.urls.length))
-
 const handleCopy = (url: string) => {
     navigator.clipboard.writeText(url)
 }

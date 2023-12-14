@@ -31,8 +31,6 @@ const handleLogout = async () => {
             },
         })
 
-        const data = await res.json()
-
         if (res.ok) {
             userStore.user = null
             localStorage.removeItem('user')
@@ -64,5 +62,11 @@ ul {
 
 button {
     font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+    .logo h1 {
+        font-size: 1.25rem;
+    }
 }
 </style>
