@@ -60,7 +60,7 @@ const handleLogin = async (values: any) => {
 }
 
 const schema = Yup.object().shape({
-    username: Yup.string().required('Username is required').min(6, 'Username must be at least 3 characters'),
+    username: Yup.string().required('Username is required').min(6, 'Username must be at least 6 characters'),
     password: Yup.string().required('Password is required').min(6, 'Password must be at least 6 characters'),
 });
 
