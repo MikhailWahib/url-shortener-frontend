@@ -134,6 +134,8 @@ button {
 
 .error-msg {
     color: red;
+    font-size: .85rem;
+    font-weight: 300;
 }
 
 .signup-text {
