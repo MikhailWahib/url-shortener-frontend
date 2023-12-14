@@ -11,7 +11,10 @@
             <label for="confirmPassword">Confirm Password</label>
             <input type="password" v-model="confirmPassword" v-bind="confirmPasswordAttrs">
             <div class="error-msg" v-if="isFieldTouched('confirmPassword')">{{ errors.confirmPassword }}</div>
-            <button type="submit" class="btn btn-primary" :disabled="isSubmitting">Sign Up</button>
+            <button type="submit" class="btn btn-primary" :disabled="isLoading">
+                <span v-if="!isLoading">Sign Up</span>
+                <Spinner v-if="isLoading" />
+            </button>
         </form>
         <p class="login-text">Already have an account? <RouterLink to="/login" class="login-link">Login</RouterLink>
         </p>
@@ -26,6 +29,7 @@ import { useRouter } from 'vue-router';
 import * as Yup from 'yup';
 import { useForm } from 'vee-validate';
 import { useToast } from 'vue-toastification';
+import Spinner from '@/components/Spinner.vue';
 
 type Response = {
     message: string
@@ -33,11 +37,13 @@ type Response = {
 } | undefined;
 
 
-const router = useRouter();
+const isLoading = ref(false);
 const resError = ref<string | undefined>();
+const router = useRouter();
 
 const toast = useToast();
 const handleSignup = async (values: any) => {
+    isLoading.value = true;
     const API_URL = import.meta.env.VITE_API_URL;
     const res = await fetch(`${API_URL}api/v1/users/`, {
         method: 'POST',
@@ -56,6 +62,7 @@ const handleSignup = async (values: any) => {
     } else {
         resError.value = data?.error;
     }
+    isLoading.value = false;
 }
 
 const schema = Yup.object().shape({
@@ -128,10 +135,6 @@ input:focus {
 
 button {
     margin-top: 1rem;
-}
-
-.guest-btn {
-    margin-bottom: .5rem;
 }
 
 .error-msg {

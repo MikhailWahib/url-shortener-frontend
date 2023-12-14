@@ -8,7 +8,10 @@
             <label for="password">Password</label>
             <input type="password" v-model="password" v-bind="passwordAttrs">
             <div class="error-msg" v-if="isFieldTouched('password')">{{ errors.password }}</div>
-            <button type="submit" class="btn btn-primary" :disabled="isSubmitting">Login</button>
+            <button type="submit" class="btn btn-primary" :disabled="isLoading">
+                <span v-if="!isLoading">Login</span>
+                <Spinner v-if="isLoading" />
+            </button>
         </form>
         <p class="signup-text">New User? <RouterLink to="/signup" class="signup-link">Sign Up</RouterLink>
         </p>
@@ -23,6 +26,7 @@ import { useRouter } from 'vue-router';
 import * as Yup from 'yup';
 import { useForm } from 'vee-validate';
 import { userStore } from '@/userStore';
+import Spinner from '@/components/Spinner.vue';
 
 type Response = {
     id?: number;
@@ -31,10 +35,12 @@ type Response = {
 } | undefined;
 
 
-const router = useRouter();
+const isLoading = ref(false);
 const resError = ref<string | undefined>();
+const router = useRouter();
 
 const handleLogin = async (values: any) => {
+    isLoading.value = true;
     const API_URL = import.meta.env.VITE_API_URL;
     const res = await fetch(`${API_URL}api/v1/users/login`, {
         method: 'POST',
@@ -57,6 +63,7 @@ const handleLogin = async (values: any) => {
     } else {
         resError.value = data?.error;
     }
+    isLoading.value = false;
 }
 
 const schema = Yup.object().shape({
