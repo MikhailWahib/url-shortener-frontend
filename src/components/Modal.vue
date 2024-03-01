@@ -59,4 +59,10 @@ const close = () => {
 button {
     margin-top: 3rem;
 }
+
+@media (max-width: 768px) {
+    .modal {
+        width: 90%;
+    }
+}
 </style>
