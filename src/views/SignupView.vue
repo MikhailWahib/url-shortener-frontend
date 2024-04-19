@@ -45,7 +45,7 @@ const toast = useToast();
 const handleSignup = async (values: any) => {
     isLoading.value = true;
     const API_URL = import.meta.env.VITE_API_URL;
-    const res = await fetch(`${API_URL}api/v1/users/`, {
+    const res = await fetch(`${API_URL}/api/v1/users`, {
         method: 'POST',
         credentials: 'include',
         mode: 'cors',
@@ -158,4 +158,3 @@ button {
     opacity: .75;
 }
 </style>
-    

@@ -42,7 +42,7 @@ const router = useRouter();
 const handleLogin = async (values: any) => {
     isLoading.value = true;
     const API_URL = import.meta.env.VITE_API_URL;
-    const res = await fetch(`${API_URL}api/v1/users/login`, {
+    const res = await fetch(`${API_URL}/api/v1/users/login`, {
         method: 'POST',
         credentials: 'include',
         mode: 'cors',
@@ -160,4 +160,3 @@ button {
     opacity: .75;
 }
 </style>
-    
