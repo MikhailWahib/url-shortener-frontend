@@ -21,7 +21,7 @@ const onSubmit = async () => {
     const API_URL = import.meta.env.VITE_API_URL
 
     try {
-        const res = await fetch(`${API_URL}api/v1/shorten`, {
+        const res = await fetch(`${API_URL}/api/v1/shorten`, {
             method: 'POST',
             credentials: 'include',
             mode: 'cors',
