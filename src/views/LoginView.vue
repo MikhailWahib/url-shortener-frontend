@@ -45,7 +45,6 @@ const handleLogin = async (values: any) => {
     const res = await fetch(`${API_URL}/api/v1/users/login`, {
         method: 'POST',
         credentials: 'include',
-        mode: 'cors',
         headers: {
             'Content-Type': 'application/json'
         },

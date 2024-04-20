@@ -23,7 +23,6 @@ const getUrls = async () => {
     const res = await fetch(`${API_URL}/api/v1/users/urls`, {
       method: 'GET',
       credentials: 'include',
-      mode: 'cors',
       headers: {
         'Content-Type': 'application/json'
       },

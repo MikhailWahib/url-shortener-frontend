@@ -48,7 +48,6 @@ const handleSignup = async (values: any) => {
     const res = await fetch(`${API_URL}/api/v1/users`, {
         method: 'POST',
         credentials: 'include',
-        mode: 'cors',
         headers: {
             'Content-Type': 'application/json'
         },

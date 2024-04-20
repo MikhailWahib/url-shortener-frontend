@@ -25,7 +25,6 @@ const handleLogout = async () => {
         const res = await fetch(`${API_URL}/api/v1/users/logout`, {
             method: 'POST',
             credentials: 'include',
-            mode: 'cors',
             headers: {
                 'Content-Type': 'application/json'
             },

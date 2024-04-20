@@ -24,7 +24,6 @@ const onSubmit = async () => {
         const res = await fetch(`${API_URL}/api/v1/shorten`, {
             method: 'POST',
             credentials: 'include',
-            mode: 'cors',
             headers: {
                 'Content-Type': 'application/json'
             },
